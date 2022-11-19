@@ -5,7 +5,7 @@ var margin = { top: 10, right: 30, bottom: 30, left: 60 },
 
 // append the svg object to the body of the page
 var svg = d3
-  .select("#main_visualization")
+  .select("#line")
   .append("svg")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom)
