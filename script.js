@@ -31,11 +31,25 @@ d3.csv("data/region.csv").then(function (data) {
   var y = d3.scaleLinear().domain([0, 450]).range([height, 0]);
   svg.append("g").call(d3.axisLeft(y));
 
+
+  function hideSVG(id) {
+    var style = document.getElementById(id).style.display;
+    if(style === "none")
+      document.getElementById(id).style.display = "block";
+    else
+      document.getElementById(id).style.display = "none";
+    //or to hide the all svg
+    //document.getElementById("mySvg").style.display = "none";
+  }
+
+
   // Add the line
   var NorthAmerica = svg
+    
     .append("path")
     .datum(data)
     .attr("fill", "none")
+    .attr("id", "NorthAmerica")
     .attr("stroke", "steelblue")
     .attr("stroke-width", strokeWidth)
     .attr(
@@ -193,4 +207,18 @@ d3.csv("data/region.csv").then(function (data) {
     .on("mouseout", function (d, i) {
       d3.select(this).attr("stroke-width", strokeWidth);
     });
+
+    
+
+    d3.select("#NorthAmericaa").on('click', function(){
+      
+      if(d3.select("#NorthAmerica").style("opacity")==1)
+      {
+        d3.select("#NorthAmerica").style("opacity",0)
+      }
+      else{
+        d3.select("#NorthAmerica").style("opacity",1)
+      }
+    })
+
 });
