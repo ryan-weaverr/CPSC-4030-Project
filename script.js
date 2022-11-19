@@ -1,6 +1,6 @@
 // set the dimensions and margins of the graph
 var margin = { top: 10, right: 30, bottom: 30, left: 60 },
-  width = 460 - margin.left - margin.right,
+  width = 1000 - margin.left - margin.right,
   height = 400 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
@@ -35,10 +35,7 @@ d3.csv(
       .call(d3.axisBottom(x));
 
     // Add Y axis
-    var y = d3
-      .scaleLinear()
-      .domain(d3.extent(data, yAccessor))
-      .range([height, 0]);
+    var y = d3.scaleLinear().domain([0, 450]).range([height, 0]);
     svg.append("g").call(d3.axisLeft(y));
 
     // Add the line
@@ -57,6 +54,108 @@ d3.csv(
           })
           .y(function (d) {
             return y(d.NorthAmerica);
+          })
+      );
+    svg
+      .append("path")
+      .datum(data)
+      .attr("fill", "none")
+      .attr("stroke", "green")
+      .attr("stroke-width", 1.5)
+      .attr(
+        "d",
+        d3
+          .line()
+          .x(function (d) {
+            return x(d.Year);
+          })
+          .y(function (d) {
+            return y(d.EuropeCentralAsia);
+          })
+      );
+    svg
+      .append("path")
+      .datum(data)
+      .attr("fill", "none")
+      .attr("stroke", "brown")
+      .attr("stroke-width", 1.5)
+      .attr(
+        "d",
+        d3
+          .line()
+          .x(function (d) {
+            return x(d.Year);
+          })
+          .y(function (d) {
+            return y(d.LatinAmericaCaribbean);
+          })
+      );
+    svg
+      .append("path")
+      .datum(data)
+      .attr("fill", "none")
+      .attr("stroke", "red")
+      .attr("stroke-width", 1.5)
+      .attr(
+        "d",
+        d3
+          .line()
+          .x(function (d) {
+            return x(d.Year);
+          })
+          .y(function (d) {
+            return y(d.MiddleEastNorthAfrica);
+          })
+      );
+    svg
+      .append("path")
+      .datum(data)
+      .attr("fill", "none")
+      .attr("stroke", "orange")
+      .attr("stroke-width", 1.5)
+      .attr(
+        "d",
+        d3
+          .line()
+          .x(function (d) {
+            return x(d.Year);
+          })
+          .y(function (d) {
+            return y(d.SouthAsia);
+          })
+      );
+    svg
+      .append("path")
+      .datum(data)
+      .attr("fill", "none")
+      .attr("stroke", "purple")
+      .attr("stroke-width", 1.5)
+      .attr(
+        "d",
+        d3
+          .line()
+          .x(function (d) {
+            return x(d.Year);
+          })
+          .y(function (d) {
+            return y(d.SubSaharanAfrica);
+          })
+      );
+    svg
+      .append("path")
+      .datum(data)
+      .attr("fill", "none")
+      .attr("stroke", "blue")
+      .attr("stroke-width", 1.5)
+      .attr(
+        "d",
+        d3
+          .line()
+          .x(function (d) {
+            return x(d.Year);
+          })
+          .y(function (d) {
+            return y(d.EastAsiaPacific);
           })
       );
   }
