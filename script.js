@@ -32,7 +32,7 @@ d3.csv("data/region.csv").then(function (data) {
   svg.append("g").call(d3.axisLeft(y));
 
   // Add the line
-  svg
+  var NorthAmerica = svg
     .append("path")
     .datum(data)
     .attr("fill", "none")
@@ -55,7 +55,7 @@ d3.csv("data/region.csv").then(function (data) {
     .on("mouseout", function (d, i) {
       d3.select(this).attr("stroke-width", strokeWidth);
     });
-  svg
+  var Europe = svg
     .append("path")
     .datum(data)
     .attr("fill", "none")
@@ -78,7 +78,7 @@ d3.csv("data/region.csv").then(function (data) {
     .on("mouseout", function (d, i) {
       d3.select(this).attr("stroke-width", strokeWidth);
     });
-  svg
+  var LatinAmerica = svg
     .append("path")
     .datum(data)
     .attr("fill", "none")
@@ -101,7 +101,7 @@ d3.csv("data/region.csv").then(function (data) {
     .on("mouseout", function (d, i) {
       d3.select(this).attr("stroke-width", strokeWidth);
     });
-  svg
+  var MiddleEast = svg
     .append("path")
     .datum(data)
     .attr("fill", "none")
@@ -124,7 +124,7 @@ d3.csv("data/region.csv").then(function (data) {
     .on("mouseout", function (d, i) {
       d3.select(this).attr("stroke-width", strokeWidth);
     });
-  svg
+  var SouthAsia = svg
     .append("path")
     .datum(data)
     .attr("fill", "none")
@@ -147,7 +147,7 @@ d3.csv("data/region.csv").then(function (data) {
     .on("mouseout", function (d, i) {
       d3.select(this).attr("stroke-width", strokeWidth);
     });
-  svg
+  var SubSaharanAfrica = svg
     .append("path")
     .datum(data)
     .attr("fill", "none")
@@ -170,7 +170,7 @@ d3.csv("data/region.csv").then(function (data) {
     .on("mouseout", function (d, i) {
       d3.select(this).attr("stroke-width", strokeWidth);
     });
-  svg
+  var EastAsia = svg
     .append("path")
     .datum(data)
     .attr("fill", "none")
