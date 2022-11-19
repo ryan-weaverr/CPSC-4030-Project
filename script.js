@@ -31,21 +31,17 @@ d3.csv("data/region.csv").then(function (data) {
   var y = d3.scaleLinear().domain([0, 450]).range([height, 0]);
   svg.append("g").call(d3.axisLeft(y));
 
-
   function hideSVG(id) {
     var style = document.getElementById(id).style.display;
-    if(style === "none")
-      document.getElementById(id).style.display = "block";
-    else
-      document.getElementById(id).style.display = "none";
+    if (style === "none") document.getElementById(id).style.display = "block";
+    else document.getElementById(id).style.display = "none";
     //or to hide the all svg
     //document.getElementById("mySvg").style.display = "none";
   }
 
-
   // Add the line
   var NorthAmerica = svg
-    
+
     .append("path")
     .datum(data)
     .attr("fill", "none")
@@ -72,6 +68,7 @@ d3.csv("data/region.csv").then(function (data) {
   var Europe = svg
     .append("path")
     .datum(data)
+    .attr("id", "Europe")
     .attr("fill", "none")
     .attr("stroke", "green")
     .attr("stroke-width", strokeWidth)
@@ -95,6 +92,7 @@ d3.csv("data/region.csv").then(function (data) {
   var LatinAmerica = svg
     .append("path")
     .datum(data)
+    .attr("id", "LatinAmerica")
     .attr("fill", "none")
     .attr("stroke", "brown")
     .attr("stroke-width", strokeWidth)
@@ -118,6 +116,7 @@ d3.csv("data/region.csv").then(function (data) {
   var MiddleEast = svg
     .append("path")
     .datum(data)
+    .attr("id", "MiddleEast")
     .attr("fill", "none")
     .attr("stroke", "red")
     .attr("stroke-width", strokeWidth)
@@ -141,6 +140,7 @@ d3.csv("data/region.csv").then(function (data) {
   var SouthAsia = svg
     .append("path")
     .datum(data)
+    .attr("id", "SouthAsia")
     .attr("fill", "none")
     .attr("stroke", "orange")
     .attr("stroke-width", strokeWidth)
@@ -164,6 +164,7 @@ d3.csv("data/region.csv").then(function (data) {
   var SubSaharanAfrica = svg
     .append("path")
     .datum(data)
+    .attr("id", "SubSaharanAfrica")
     .attr("fill", "none")
     .attr("stroke", "purple")
     .attr("stroke-width", strokeWidth)
@@ -187,6 +188,7 @@ d3.csv("data/region.csv").then(function (data) {
   var EastAsia = svg
     .append("path")
     .datum(data)
+    .attr("id", "EastAsia")
     .attr("fill", "none")
     .attr("stroke", "blue")
     .attr("stroke-width", strokeWidth)
@@ -208,17 +210,20 @@ d3.csv("data/region.csv").then(function (data) {
       d3.select(this).attr("stroke-width", strokeWidth);
     });
 
-    
-
-    d3.select("#NorthAmericaa").on('click', function(){
-      
-      if(d3.select("#NorthAmerica").style("opacity")==1)
-      {
-        d3.select("#NorthAmerica").style("opacity",0)
+  function toggle(buttonID, id) {
+    d3.select(buttonID).on("click", function () {
+      if (d3.select(id).style("opacity") == 1) {
+        d3.select(id).style("opacity", 0);
+      } else {
+        d3.select(id).style("opacity", 1);
       }
-      else{
-        d3.select("#NorthAmerica").style("opacity",1)
-      }
-    })
-
+    });
+  }
+  toggle("#NA", "#NorthAmerica");
+  toggle("#EAP", "#EastAsia");
+  toggle("#ECA", "#Europe");
+  toggle("#LAC", "#LatinAmerica");
+  toggle("#MENA", "#MiddleEast");
+  toggle("#SA", "#SouthAsia");
+  toggle("#SSA", "#SubSaharanAfrica");
 });
