@@ -30,10 +30,13 @@
       // Now I can use this dataset:
       function(data) {
     
-        var yAccessor = (d) => d.NorthAmerica
-        var xAccessor = (d) => d.Year
+        console.log(data.NorthAmerica)
+        console.log(data.Year)
 
-        // Add X axis --> it is a date format
+        var yAccessor = (d) => d.NorthAmerica;
+        var xAccessor = (d) => d.Year;
+
+        // Add X axis
         var x = d3.scaleLinear()
           .domain(d3.extent(data, xAccessor))
           .range([ 0, width ]);
@@ -55,8 +58,8 @@
           .attr("stroke", "steelblue")
           .attr("stroke-width", 1.5)
           .attr("d", d3.line()
-            .x(xAccessor(d))
-            .y(yAccessor(d))
+            .x(function(d) {return x(d.Year)})
+            .y(function(d) {return y(d.NorthAmerica)})
             )
 
 })
