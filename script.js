@@ -55,7 +55,8 @@ d3.csv(
           .y(function (d) {
             return y(d.NorthAmerica);
           })
-      );
+      ).on("mouseover", (event, data)=> { console.log(data)})
+      .on("mouseout", (event, data)=> { console.log(data)});
     svg
       .append("path")
       .datum(data)
@@ -72,7 +73,8 @@ d3.csv(
           .y(function (d) {
             return y(d.EuropeCentralAsia);
           })
-      );
+      ).on("mouseover", (event, data)=> { console.log(data)})
+      .on("mouseout", (event, data)=> { console.log(data)});
     svg
       .append("path")
       .datum(data)
@@ -89,7 +91,8 @@ d3.csv(
           .y(function (d) {
             return y(d.LatinAmericaCaribbean);
           })
-      );
+      ).on("mouseover", (event, data)=> { console.log(data)})
+      .on("mouseout", (event, data)=> { console.log(data)});
     svg
       .append("path")
       .datum(data)
@@ -106,7 +109,8 @@ d3.csv(
           .y(function (d) {
             return y(d.MiddleEastNorthAfrica);
           })
-      );
+      ).on("mouseover", (event, data)=> { console.log(data)})
+      .on("mouseout", (event, data)=> { console.log(data)});
     svg
       .append("path")
       .datum(data)
@@ -123,7 +127,8 @@ d3.csv(
           .y(function (d) {
             return y(d.SouthAsia);
           })
-      );
+      ).on("mouseover", (event, data)=> { console.log(data)})
+      .on("mouseout", (event, data)=> { console.log(data)});
     svg
       .append("path")
       .datum(data)
@@ -140,7 +145,8 @@ d3.csv(
           .y(function (d) {
             return y(d.SubSaharanAfrica);
           })
-      );
+      ).on("mouseover", (event, data)=> { console.log(data)})
+      .on("mouseout", (event, data)=> { console.log(data)});
     svg
       .append("path")
       .datum(data)
@@ -157,6 +163,7 @@ d3.csv(
           .y(function (d) {
             return y(d.EastAsiaPacific);
           })
-      );
+      ).on("mouseover", (event, data)=> { console.log(data)})
+      .on("mouseout", (event, data)=> { console.log(data)});
   }
 );
