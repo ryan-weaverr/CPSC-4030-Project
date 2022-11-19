@@ -14,7 +14,7 @@ var svg = d3
 
 //Read the data
 d3.csv(
-  "region.csv",
+  "data/region.csv",
 
   // Now I can use this dataset:
   function (data) {
