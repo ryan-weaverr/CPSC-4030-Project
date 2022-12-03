@@ -8,17 +8,24 @@
   </head>
 
   <body>
+    <div id="chart">
+    <h1>Visualizing NCAA Team Statistics</h1>
+    <label for="stats">Choose a statistic to display:</label>
+    <select name="stats" id="stats">
+      <option value="w">Wins</option>
+      <option value="l">Losses</option>
+    </select>
+    <div id="bar"></div>
+    <label for="team" id="teamLabel">Choose a team to display: (hold ctrl to select multiple) </label>
+    <select name="team" id="team">
+      <option value="Clemson (ACC)">Clemson (ACC)</option>
+      <option value="Georgia (SEC)">Georgia (SEC)</option>
+    </select>
+    <button id="render">Render</button>
+    </div>
 
-    <h1>Visualizing CO2 Emissions Around the World</h1>
-    <button type="button" id="NA">North America</button>
-    <button type="button" id="EAP">East Asia & Pacific</button>
-    <button type="button" id="ECA">Europe & Central Asia</button>
-    <button type="button" id="LAC">Latin America & Caribbean</button>
-    <button type="button" id="MENA">Middle East & North Africa</button>
-    <button type="button" id="SA">South Asia</button>
-    <button type="button" id="SSA">Sub-Saharan Africa</button>
-  
-    <div id="line"></div>
-    <script src="script.js"></script>
+    <div id="bar"></div>
+    <script src="conScript.js"></script>
+    <div id="bar"></div>
   </body>
 </html>
