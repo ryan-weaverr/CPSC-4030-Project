@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "d3-geomap": "^3.3.0"
+  }
+}
