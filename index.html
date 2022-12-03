@@ -9,23 +9,26 @@
 
   <body>
     <div id="chart">
-    <h1>Visualizing NCAA Team Statistics</h1>
-    <label for="stats">Choose a statistic to display:</label>
-    <select name="stats" id="stats">
-      <option value="w">Wins</option>
-      <option value="l">Losses</option>
-    </select>
-    <div id="bar"></div>
-    <label for="team" id="teamLabel">Choose a team to display: (hold ctrl to select multiple) </label>
-    <select name="team" id="team">
-      <option value="Clemson (ACC)">Clemson (ACC)</option>
-      <option value="Georgia (SEC)">Georgia (SEC)</option>
-    </select>
-    <button id="render">Render</button>
-    </div>
+      <h1>Visualizing NCAA Team Statistics</h1>
 
-    <div id="bar"></div>
-    <script src="conScript.js"></script>
-    <div id="bar"></div>
+      <label for="stats">Choose a statistic to display:</label>
+      <select name="stats" id="stats">
+        <script src="stats.js"></script>
+      </select>
+
+      <div id="bar"></div>
+      <label for="team" id="teamLabel">Choose a team to display:</label>
+      <select id="teams">
+        <script src="teams.js"></script>
+      </select>
+      
+      <button id="render">Render</button>
+
+      <div id="bar"></div>
+      <i>Some statistics may not be available for some teams</i>
+
+      <div id="bar"></div>
+      <script src="conScript.js"></script>
+    </div>
   </body>
 </html>

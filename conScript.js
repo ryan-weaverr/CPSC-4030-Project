@@ -8,7 +8,10 @@ d3.csv("data/cfb.csv").then(function (data) {
       d3.selectAll("svg").remove();
 
       // Get team from dropdown
-        var selectedTeam = document.getElementById("team").value;
+      var selectedTeam = document.getElementById("teams").value;
+
+      // Get stat from dropdown
+      var selectedStat = document.getElementById("stats").value;
   
       const margin = { top: 10, right: 30, bottom: 30, left: 60 },
         width = 460 - margin.left - margin.right,
@@ -22,16 +25,21 @@ d3.csv("data/cfb.csv").then(function (data) {
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
-  
+
       // Add X axis
       const x = d3.scaleLinear().domain([2012, 2021]).range([0, width]);
       svg
         .append("g")
         .attr("transform", `translate(0, ${height})`)
         .call(d3.axisBottom(x));
+
+      // Get the max value of the selected stat
+      var max = d3.max(data, function (d) {
+        return +d[selectedStat];
+      });
   
       // Add Y axis
-      const y = d3.scaleLinear().domain([0, 25]).range([height, 0]);
+      const y = d3.scaleLinear().domain([0, max]).range([height, 0]);
       svg.append("g").call(d3.axisLeft(y));
   
       svg
@@ -63,11 +71,34 @@ d3.csv("data/cfb.csv").then(function (data) {
           return x(d.Year);
         })
         .attr("cy", function (d) {
-            console.log(d);
-            return y(d.Win);
+            // Get selected stat
+            return y(d[selectedStat]);
         })
         .attr("r", 1.5)
         .style("fill", "#4080FF");
+
+      // Draw line
+      svg
+        .append("path")
+        .datum(
+          data.filter((v) => {
+            return v.Team === selectedTeam;
+          }
+        ))
+        .attr("fill", "none")
+        .attr("stroke", "#4080FF")
+        .attr("stroke-width", 1.5)
+        .attr(
+          "d",
+          d3
+            .line()
+            .x(function (d) {
+              return x(d.Year);
+            })
+          .y(function (d) {
+            return y(d[selectedStat]);
+          })
+        );
     }
     update();
     button.addEventListener("click", update);
