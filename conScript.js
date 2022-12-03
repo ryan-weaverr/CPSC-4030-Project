@@ -1,4 +1,5 @@
-//window.onload = updateImage;
+var strokeWidth = 3;
+var mouseWidth = 5;
 
 //Read the data
 d3.csv("data/cfb.csv").then(function (data) {
@@ -7,8 +8,8 @@ d3.csv("data/cfb.csv").then(function (data) {
     function update() {
       d3.selectAll("svg").remove();
 
-      // Get team from dropdown
-      var selectedTeam = document.getElementById("teams").value;
+      // Get teams array from multiple dropdown
+      var selectedTeams = document.getElementById("teams");
 
       // Get stat from dropdown
       var selectedStat = document.getElementById("stats").value;
@@ -26,8 +27,22 @@ d3.csv("data/cfb.csv").then(function (data) {
         .append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
+      // Get lowest year that selected teams played
+      var minYear = d3.min(data, function (d) {
+        if (selectedTeams.value.includes(d.Team)) {
+          return d.Year;
+        }
+      });
+
+      // Get highest year that selected teams played
+      var maxYear = d3.max(data, function (d) {
+        if (selectedTeams.value.includes(d.Team)) {
+          return d.Year;
+        }
+      });
+
       // Add X axis
-      const x = d3.scaleLinear().domain([2012, 2021]).range([0, width]);
+      const x = d3.scaleLinear().domain([minYear, maxYear]).range([0, width]);
       svg
         .append("g")
         .attr("transform", `translate(0, ${height})`)
@@ -41,48 +56,79 @@ d3.csv("data/cfb.csv").then(function (data) {
       // Add Y axis
       const y = d3.scaleLinear().domain([0, max]).range([height, 0]);
       svg.append("g").call(d3.axisLeft(y));
-  
-      svg
-        .append("g")
-        .selectAll("dot")
-        .data(
-          data.filter((v) => {
-            console.log(v.Team === selectedTeam);
-            return v.Team === selectedTeam;
-          })
-        )
-        .join(
-          function (enter) {
-            return enter.append("circle");
-          },
-          function (exit) {
-            return exit
-              .transition()
-              .duration(5)
-              .attr("r", 0)
-              .style("opacity", 0)
-              .attr("cx", 1000)
-              .on("end", function () {
-                d3.select().remove();
-              });
-          }
-        )
-        .attr("cx", function (d) {
-          return x(d.Year);
-        })
-        .attr("cy", function (d) {
-            // Get selected stat
-            return y(d[selectedStat]);
-        })
-        .attr("r", 1.5)
-        .style("fill", "#4080FF");
 
-      // Draw line
+      // Add axis labels
+      svg
+        .append("text")
+        .attr("text-anchor", "end")
+        .attr("x", width / 2 + margin.left)
+        .attr("y", height + margin.top + 20)
+        .text("Year");
+
+      svg
+        .append("text")
+        .attr("text-anchor", "end")
+        .attr("transform", "rotate(-90)")
+        .attr("y", -margin.left + 20)
+        .attr("x", -margin.top - height / 2)
+        .text(selectedStat);
+
+      // Draw a line for each team in selectedTeams
+      for (var i = 0; i < selectedTeams.length; i++) {
+        if (selectedTeams[i].selected) {
+          // Get a random color
+          var color = d3
+            .scaleOrdinal()
+            .domain([0, 1])
+            .range([d3.schemeSet2[Math.floor(Math.random() * 8)]]);
+
+          var team = selectedTeams[i].value;
+          var teamData = data.filter(function (d) {
+            return d.Team == team;
+          });
+          svg
+            .append("path")
+            .datum(teamData)
+            .attr("fill", "none")
+            .attr("stroke", color)
+            .attr("stroke-width", 1.5)
+            .attr(
+              "d",
+              d3
+                .line()
+                .x(function (d) {
+                  return x(d.Year);
+                })
+                .y(function (d) {
+                  return y(d[selectedStat]);
+                })
+            )
+            
+            // Add dynamically placed legend
+            var legend = svg
+              .append("g")
+              .attr("transform", `translate(${width - 100}, ${i * 20})`);
+            legend
+              .append("rect")
+              .attr("width", 10)
+              .attr("height", 10)
+              .attr("fill", color);
+            legend
+              .append("text")
+              .attr("x", 12)
+              .attr("y", 10)
+              .text(team)
+              .attr("text-anchor", "start")
+              .style("alignment-baseline", "middle");
+              
+        }
+      }
+
       svg
         .append("path")
         .datum(
           data.filter((v) => {
-            return v.Team === selectedTeam;
+            return v.Team === selectedTeams;
           }
         ))
         .attr("fill", "none")
@@ -97,8 +143,7 @@ d3.csv("data/cfb.csv").then(function (data) {
             })
           .y(function (d) {
             return y(d[selectedStat]);
-          })
-        );
+          }))
     }
     update();
     button.addEventListener("click", update);
