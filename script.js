@@ -45,10 +45,10 @@ d3.csv("data/cfb.csv").then(function (data) {
         ),
       ])
       .range([0, width]);
-    svg
-      .append("g")
-      .attr("transform", `translate(0, ${height})`)
-      .call(d3.axisBottom(x));
+    // svg
+    //   .append("g")
+    //   .attr("transform", `translate(0, ${height})`)
+    //   .call(d3.axisBottom(x));
 
     // Add Y axis
     const y = d3
@@ -65,19 +65,16 @@ d3.csv("data/cfb.csv").then(function (data) {
       .range([height, 0]);
     //svg.append("g").call(d3.axisLeft(y));
 
+    var xAxis = d3.axisBottom(x);
     var yAxis = d3.axisLeft(y);
-
-    //yAxis;
-
-    var changing_axis = svg
+    svg
       .append("g")
-      .attr("transform", "translate(" + 0 + "," + 0 + ")")
-      .call(yAxis);
+      .attr("transform", `translate(0, ${height})`)
+      .transition()
+      .call(xAxis);
+    svg.append("g").transition().call(yAxis);
 
-    // changing_axis
-    //   .transition()
-    //   .attr("transform", "translate(" + 0 + "," + 0 + ")")
-    //   .call(yAxis);
+    //d3.axisLeft(y).transition();
     svg
       .append("g")
       .selectAll("dot")
@@ -110,6 +107,22 @@ d3.csv("data/cfb.csv").then(function (data) {
       })
       .attr("r", 1.5)
       .style("fill", "#4080FF");
+
+    svg
+      .append("text")
+      .attr("class", "x label")
+      .attr("text-anchor", "end")
+      .attr("x", width)
+      .attr("y", height - 6)
+      .text(xAttr);
+    svg
+      .append("text")
+      .attr("class", "y label")
+      .attr("text-anchor", "end")
+      .attr("y", 6)
+      .attr("dy", ".75em")
+      .attr("transform", "rotate(-90)")
+      .text(yAttr);
   }
   update();
   button.addEventListener("click", update);
