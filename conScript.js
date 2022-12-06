@@ -13,10 +13,16 @@ d3.csv("data/cfb.csv").then(function (data) {
 
       // Get stat from dropdown
       var selectedStat = document.getElementById("stats").value;
-  
-      const margin = { top: 10, right: 30, bottom: 30, left: 60 },
-        width = 460 - margin.left - margin.right,
-        height = 400 - margin.top - margin.bottom;
+
+      // Resize svg based on window size
+      var width = window.innerWidth * 0.7;
+      var height = window.innerHeight * 0.7;
+
+      // set the dimensions and margins of the graph
+      var margin = { top: 10, right: 30, bottom: 30, left: 60 },
+        width = width - margin.left - margin.right,
+        height = height - margin.top - margin.bottom;
+      
   
       // append the svg object to the body of the page
       const svg = d3
@@ -53,18 +59,20 @@ d3.csv("data/cfb.csv").then(function (data) {
         return +d[selectedStat];
       });
   
-      // Add Y axis
+      /*// Add Y axis
       const y = d3.scaleLinear().domain([0, max]).range([height, 0]);
-      svg.append("g").call(d3.axisLeft(y));
+      svg.append("g").call(d3.axisLeft(y));*/
 
-      // Add axis labels
+      // Add y axis label
       svg
         .append("text")
         .attr("text-anchor", "end")
-        .attr("x", width / 2 + margin.left)
-        .attr("y", height + margin.top + 20)
-        .text("Year");
+        .attr("transform", "rotate(-90)")
+        .attr("y", -margin.left + 20)
+        .attr("x", -margin.top - height / 2)
+        .text(selectedStat);
 
+      // Add X axis label
       svg
         .append("text")
         .attr("text-anchor", "end")
@@ -101,8 +109,7 @@ d3.csv("data/cfb.csv").then(function (data) {
                 })
                 .y(function (d) {
                   return y(d[selectedStat]);
-                })
-            )
+                }))
             
             // Add dynamically placed legend
             var legend = svg
@@ -120,7 +127,7 @@ d3.csv("data/cfb.csv").then(function (data) {
               .text(team)
               .attr("text-anchor", "start")
               .style("alignment-baseline", "middle");
-              
+
         }
       }
 
@@ -129,8 +136,7 @@ d3.csv("data/cfb.csv").then(function (data) {
         .datum(
           data.filter((v) => {
             return v.Team === selectedTeams;
-          }
-        ))
+          }))
         .attr("fill", "none")
         .attr("stroke", "#4080FF")
         .attr("stroke-width", 1.5)
@@ -146,5 +152,6 @@ d3.csv("data/cfb.csv").then(function (data) {
           }))
     }
     update();
+
     button.addEventListener("click", update);
   });
