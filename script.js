@@ -33,16 +33,51 @@ d3.csv("data/cfb.csv").then(function (data) {
       .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
     // Add X axis
-    const x = d3.scaleLinear().domain([0, 110]).range([0, width]);
+    const x = d3
+      .scaleLinear()
+      .domain([
+        0,
+        d3.max(
+          data.map(function (d) {
+            return d[xAttr];
+          }),
+          (s) => +s
+        ),
+      ])
+      .range([0, width]);
     svg
       .append("g")
       .attr("transform", `translate(0, ${height})`)
       .call(d3.axisBottom(x));
 
     // Add Y axis
-    const y = d3.scaleLinear().domain([0, 10000]).range([height, 0]);
-    svg.append("g").call(d3.axisLeft(y));
+    const y = d3
+      .scaleLinear()
+      .domain([
+        0,
+        d3.max(
+          data.map(function (d) {
+            return d[yAttr];
+          }),
+          (s) => +s
+        ),
+      ])
+      .range([height, 0]);
+    //svg.append("g").call(d3.axisLeft(y));
 
+    var yAxis = d3.axisLeft(y);
+
+    //yAxis;
+
+    var changing_axis = svg
+      .append("g")
+      .attr("transform", "translate(" + 0 + "," + 0 + ")")
+      .call(yAxis);
+
+    // changing_axis
+    //   .transition()
+    //   .attr("transform", "translate(" + 0 + "," + 0 + ")")
+    //   .call(yAxis);
     svg
       .append("g")
       .selectAll("dot")
