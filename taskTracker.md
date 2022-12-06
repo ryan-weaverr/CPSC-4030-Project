@@ -4,5 +4,4 @@ Luke - Creating scatter plot (will have multiple selectable attributes)
 
 Ryan - Changing/shifting bar graph to display wins for each team over the years
 
-Blue - 
-
+Blue - Creating a map with circles that relate to the percentage of games won

@@ -1,5 +1,3 @@
-//window.onload = updateImage;
-
 //Read the data
 d3.csv("data/cfb.csv").then(function (data) {
   // set the dimensions and margins of the graph
