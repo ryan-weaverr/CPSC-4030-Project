@@ -8,8 +8,16 @@ d3.csv("data/cfb.csv").then(function (data) {
   var button = document.getElementById("update");
   var select = document.getElementById("yearSelect");
 
+  var xGetter = document.getElementById("xSelect");
+  var yGetter = document.getElementById("ySelect");
+
   function update() {
     d3.selectAll("svg").remove();
+
+    var xAttr = xGetter.options[xGetter.selectedIndex].value;
+    var yAttr = yGetter.options[yGetter.selectedIndex].value;
+
+    console.log(xAttr, yAttr);
 
     const margin = { top: 10, right: 30, bottom: 30, left: 60 },
       width = 460 - margin.left - margin.right,
@@ -60,10 +68,10 @@ d3.csv("data/cfb.csv").then(function (data) {
         }
       )
       .attr("cx", function (d) {
-        return x(d.TotalTDs);
+        return x(d[xAttr]);
       })
       .attr("cy", function (d) {
-        return y(d.OffYards);
+        return y(d[yAttr]);
       })
       .attr("r", 1.5)
       .style("fill", "#4080FF");
