@@ -1,3 +1,5 @@
+//window.onload = updateImage;
+
 //Read the data
 d3.csv("data/cfb.csv").then(function (data) {
   // set the dimensions and margins of the graph
@@ -10,7 +12,7 @@ d3.csv("data/cfb.csv").then(function (data) {
   var yGetter = document.getElementById("ySelect");
 
   function update() {
-    d3.selectAll("svg").remove();
+    d3.selectAll("#scatter").remove();
 
     var xAttr = xGetter.options[xGetter.selectedIndex].value;
     var yAttr = yGetter.options[yGetter.selectedIndex].value;
@@ -25,6 +27,7 @@ d3.csv("data/cfb.csv").then(function (data) {
     const svg = d3
       .select("#line")
       .append("svg")
+      .attr("id", "scatter")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
