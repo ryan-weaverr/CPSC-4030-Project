@@ -1,214 +1,132 @@
+//window.onload = updateImage;
+
 //Read the data
-d3.csv("data/region.csv").then(function (data) {
-  var strokeWidth = 3;
-  var mouseWidth = 5;
-
+d3.csv("data/cfb.csv").then(function (data) {
   // set the dimensions and margins of the graph
-  var margin = { top: 10, right: 30, bottom: 30, left: 60 },
-    width = 1000 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
 
-  // append the svg object to the body of the page
-  var svg = d3
-    .select("#line")
-    .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  // Add dots
+  var button = document.getElementById("update");
+  var select = document.getElementById("yearSelect");
 
-  var yAccessor = (d) => d.NorthAmerica;
-  var xAccessor = (d) => d.Year;
+  var xGetter = document.getElementById("xSelect");
+  var yGetter = document.getElementById("ySelect");
 
-  // Add X axis
-  var x = d3.scaleLinear().domain(d3.extent(data, xAccessor)).range([0, width]);
-  svg
-    .append("g")
-    .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x));
+  function update() {
+    d3.selectAll("#scatter").remove();
 
-  // Add Y axis
-  var y = d3.scaleLinear().domain([0, 450]).range([height, 0]);
-  svg.append("g").call(d3.axisLeft(y));
+    var xAttr = xGetter.options[xGetter.selectedIndex].value;
+    var yAttr = yGetter.options[yGetter.selectedIndex].value;
 
-  function hideSVG(id) {
-    var style = document.getElementById(id).style.display;
-    if (style === "none") document.getElementById(id).style.display = "block";
-    else document.getElementById(id).style.display = "none";
-    //or to hide the all svg
-    //document.getElementById("mySvg").style.display = "none";
+    console.log(xAttr, yAttr);
+
+    const margin = { top: 10, right: 30, bottom: 30, left: 60 },
+      width = 460 - margin.left - margin.right,
+      height = 400 - margin.top - margin.bottom;
+
+    // append the svg object to the body of the page
+    const svg = d3
+      .select("#line")
+      .append("svg")
+      .attr("id", "scatter")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+    // Add X axis
+    const x = d3
+      .scaleLinear()
+      .domain([
+        0,
+        d3.max(
+          data.map(function (d) {
+            return d[xAttr];
+          }),
+          (s) => +s
+        ),
+      ])
+      .range([0, width]);
+    // svg
+    //   .append("g")
+    //   .attr("transform", `translate(0, ${height})`)
+    //   .call(d3.axisBottom(x));
+
+    // Add Y axis
+    const y = d3
+      .scaleLinear()
+      .domain([
+        0,
+        d3.max(
+          data.map(function (d) {
+            return d[yAttr];
+          }),
+          (s) => +s
+        ),
+      ])
+      .range([height, 0]);
+    //svg.append("g").call(d3.axisLeft(y));
+
+    var xAxis = d3.axisBottom(x);
+    var yAxis = d3.axisLeft(y);
+    svg
+      .append("g")
+      .attr("transform", `translate(0, ${height})`)
+      .transition()
+      .call(xAxis);
+    svg.append("g").transition().call(yAxis);
+
+    //d3.axisLeft(y).transition();
+    svg
+      .append("g")
+      .selectAll("dot")
+      .data(
+        data.filter((v) => {
+          return v.Year === select.options[select.selectedIndex].value;
+        })
+      )
+      .join(
+        function (enter) {
+          return enter.append("circle");
+        },
+        function (exit) {
+          return exit
+            .transition()
+            .duration(5)
+            .attr("r", 0)
+            .style("opacity", 0)
+            .attr("cx", 1000)
+            .on("end", function () {
+              d3.select().remove();
+            });
+        }
+      )
+      .attr("cx", function (d) {
+        return x(d[xAttr]);
+      })
+      .attr("cy", function (d) {
+        return y(d[yAttr]);
+      })
+      .attr("r", 1.5)
+      .style("fill", "#4080FF");
+
+    svg
+      .append("text")
+      .attr("class", "x label")
+      .attr("text-anchor", "end")
+      .attr("x", width)
+      .attr("y", height - 6)
+      .text(xAttr);
+    svg
+      .append("text")
+      .attr("class", "y label")
+      .attr("text-anchor", "end")
+      .attr("y", 6)
+      .attr("dy", ".75em")
+      .attr("transform", "rotate(-90)")
+      .text(yAttr);
   }
-
-  // Add the line
-  var NorthAmerica = svg
-
-    .append("path")
-    .datum(data)
-    .attr("fill", "none")
-    .attr("id", "NorthAmerica")
-    .attr("stroke", "steelblue")
-    .attr("stroke-width", strokeWidth)
-    .attr(
-      "d",
-      d3
-        .line()
-        .x(function (d) {
-          return x(d.Year);
-        })
-        .y(function (d) {
-          return y(d.NorthAmerica);
-        })
-    )
-    .on("mouseover", function (d, i) {
-      d3.select(this).attr("stroke-width", mouseWidth);
-    })
-    .on("mouseout", function (d, i) {
-      d3.select(this).attr("stroke-width", strokeWidth);
-    });
-  var Europe = svg
-    .append("path")
-    .datum(data)
-    .attr("id", "Europe")
-    .attr("fill", "none")
-    .attr("stroke", "green")
-    .attr("stroke-width", strokeWidth)
-    .attr(
-      "d",
-      d3
-        .line()
-        .x(function (d) {
-          return x(d.Year);
-        })
-        .y(function (d) {
-          return y(d.EuropeCentralAsia);
-        })
-    )
-    .on("mouseover", function (d, i) {
-      d3.select(this).attr("stroke-width", mouseWidth);
-    })
-    .on("mouseout", function (d, i) {
-      d3.select(this).attr("stroke-width", strokeWidth);
-    });
-  var LatinAmerica = svg
-    .append("path")
-    .datum(data)
-    .attr("id", "LatinAmerica")
-    .attr("fill", "none")
-    .attr("stroke", "brown")
-    .attr("stroke-width", strokeWidth)
-    .attr(
-      "d",
-      d3
-        .line()
-        .x(function (d) {
-          return x(d.Year);
-        })
-        .y(function (d) {
-          return y(d.LatinAmericaCaribbean);
-        })
-    )
-    .on("mouseover", function (d, i) {
-      d3.select(this).attr("stroke-width", mouseWidth);
-    })
-    .on("mouseout", function (d, i) {
-      d3.select(this).attr("stroke-width", strokeWidth);
-    });
-  var MiddleEast = svg
-    .append("path")
-    .datum(data)
-    .attr("id", "MiddleEast")
-    .attr("fill", "none")
-    .attr("stroke", "red")
-    .attr("stroke-width", strokeWidth)
-    .attr(
-      "d",
-      d3
-        .line()
-        .x(function (d) {
-          return x(d.Year);
-        })
-        .y(function (d) {
-          return y(d.MiddleEastNorthAfrica);
-        })
-    )
-    .on("mouseover", function (d, i) {
-      d3.select(this).attr("stroke-width", mouseWidth);
-    })
-    .on("mouseout", function (d, i) {
-      d3.select(this).attr("stroke-width", strokeWidth);
-    });
-  var SouthAsia = svg
-    .append("path")
-    .datum(data)
-    .attr("id", "SouthAsia")
-    .attr("fill", "none")
-    .attr("stroke", "orange")
-    .attr("stroke-width", strokeWidth)
-    .attr(
-      "d",
-      d3
-        .line()
-        .x(function (d) {
-          return x(d.Year);
-        })
-        .y(function (d) {
-          return y(d.SouthAsia);
-        })
-    )
-    .on("mouseover", function (d, i) {
-      d3.select(this).attr("stroke-width", mouseWidth);
-    })
-    .on("mouseout", function (d, i) {
-      d3.select(this).attr("stroke-width", strokeWidth);
-    });
-  var SubSaharanAfrica = svg
-    .append("path")
-    .datum(data)
-    .attr("id", "SubSaharanAfrica")
-    .attr("fill", "none")
-    .attr("stroke", "purple")
-    .attr("stroke-width", strokeWidth)
-    .attr(
-      "d",
-      d3
-        .line()
-        .x(function (d) {
-          return x(d.Year);
-        })
-        .y(function (d) {
-          return y(d.SubSaharanAfrica);
-        })
-    )
-    .on("mouseover", function (d, i) {
-      d3.select(this).attr("stroke-width", mouseWidth);
-    })
-    .on("mouseout", function (d, i) {
-      d3.select(this).attr("stroke-width", strokeWidth);
-    });
-  var EastAsia = svg
-    .append("path")
-    .datum(data)
-    .attr("id", "EastAsia")
-    .attr("fill", "none")
-    .attr("stroke", "blue")
-    .attr("stroke-width", strokeWidth)
-    .attr(
-      "d",
-      d3
-        .line()
-        .x(function (d) {
-          return x(d.Year);
-        })
-        .y(function (d) {
-          return y(d.EastAsiaPacific);
-        })
-    )
-    .on("mouseover", function (d, i) {
-      d3.select(this).attr("stroke-width", mouseWidth);
-    })
-    .on("mouseout", function (d, i) {
-      d3.select(this).attr("stroke-width", strokeWidth);
-    });
+  update();
+  button.addEventListener("click", update);
 
   function toggle(buttonID, id) {
     d3.select(buttonID).on("click", function () {
@@ -219,11 +137,4 @@ d3.csv("data/region.csv").then(function (data) {
       }
     });
   }
-  toggle("#NA", "#NorthAmerica");
-  toggle("#EAP", "#EastAsia");
-  toggle("#ECA", "#Europe");
-  toggle("#LAC", "#LatinAmerica");
-  toggle("#MENA", "#MiddleEast");
-  toggle("#SA", "#SouthAsia");
-  toggle("#SSA", "#SubSaharanAfrica");
 });
