@@ -3,11 +3,11 @@ d3.csv("data/cfb.csv").then(function (data) {
     var select = document.getElementById("teams");
     var options = [];
     data.forEach((v) => {
-        if (!options.includes(v.Team)) {
-            options.push(v.Team);
+        if (!options.includes(v.UniversityName)) {
+            options.push(v.UniversityName);
             var opt = document.createElement("option");
-            opt.value = v.Team;
-            opt.innerHTML = v.Team;
+            opt.value = v.UniversityName;
+            opt.innerHTML = v.UniversityName;
             select.appendChild(opt);
         }
     });

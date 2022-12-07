@@ -29,14 +29,14 @@ d3.csv("data/cfb.csv").then(function (data) {
 
       // Get lowest year that selected teams played
       var minYear = d3.min(data, function (d) {
-        if (selectedTeams.value.includes(d.Team)) {
+        if (selectedTeams.value.includes(d.UniversityName)) {
           return d.Year;
         }
       });
 
       // Get highest year that selected teams played
       var maxYear = d3.max(data, function (d) {
-        if (selectedTeams.value.includes(d.Team)) {
+        if (selectedTeams.value.includes(d.UniversityName)) {
           return d.Year;
         }
       });
@@ -84,7 +84,7 @@ d3.csv("data/cfb.csv").then(function (data) {
 
           var team = selectedTeams[i].value;
           var teamData = data.filter(function (d) {
-            return d.Team == team;
+            return d.UniversityName == team;
           });
           svg
             .append("path")
@@ -128,7 +128,7 @@ d3.csv("data/cfb.csv").then(function (data) {
         .append("path")
         .datum(
           data.filter((v) => {
-            return v.Team === selectedTeams;
+            return v.UniversityName === selectedTeams;
           }
         ))
         .attr("fill", "none")
