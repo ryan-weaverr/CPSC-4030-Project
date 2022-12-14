@@ -1,128 +1,136 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8" />
     <title>Bar chart D3</title>
-    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="app.css" />
     <script src="https://d3js.org/d3.v7.min.js"></script>
   </head>
+
   <h1>What Makes A Good College Football Team?</h1>
-  <h3>Relationship Between Statisitcs</h3>
   <body>
-    <form>
-      <label>Year</label>
-      <select id = "yearSelect">
-        <option value = "2010">2010</option>
-        <option value = "2011">2011</option>
-        <option value = "2012">2012</option>
-        <option value = "2013">2013</option>
-        <option value = "2014">2014</option>
-        <option value = "2015">2015</option>
-        <option value = "2016">2016</option>
-        <option value = "2017">2017</option>
-        <option value = "2018">2018</option>
-        <option value = "2019">2019</option>
-        <option value = "2020">2020</option>
-      </select>
-      <label>X Axis</label>
-      <select id = "xSelect">
-        <option value = "CMP">Completions</option>
-        <option value = "ATT">Pass Attempts</option>
-        <option value = "YDS">Passing Yards</option>
-        <option value = "CMPPercent">Completion Percentage</option>
-        <option value = "YPA">Yards Per Attempt</option>
-        <option value = "LNG">Longest Pass</option>
-        <option value = "TD">Passing Touchdowns</option>
-        <option value = "INT">Interceptions</option>
-        <option value = "SACK">Number of Times Sacked</option>
-        <!-- <option value = "SYL">Yards Lost from Sacks</option> -->
-        <option value = "RTG">Quarterback Ratings</option>
-        <option value = "R_ATT">Rush Play Attempts</option>
-        <option value = "R_AVG">Average Yards Per Rush Play</option>
-        <option value = "TOTAL_PLAYS">Total Number of Plays Run</option>
-        <option value = "RUN_PERCENT">Run Plays Percentage</option>
-        <option value = "PASS_PERCENT">Pass Plays Percentage</option>
-      </select>
-      <label>Y Axis</label>
-      <select id = "ySelect">
-        <option value = "CMP">Completions</option>
-        <option value = "ATT">Pass Attempts</option>
-        <option value = "YDS">Passing Yards</option>
-        <option value = "CMPPercent">Completion Percentage</option>
-        <option value = "YPA">Yards Per Attempt</option>
-        <option value = "LNG">Longest Pass</option>
-        <option value = "TD">Passing Touchdowns</option>
-        <option value = "INT">Interceptions</option>
-        <option value = "SACK">Number of Times Sacked</option>
-        <!-- <option value = "SYL">Yards Lost from Sacks</option> -->
-        <option value = "RTG">Quarterback Ratings</option>
-        <option value = "R_ATT">Rush Play Attempts</option>
-        <option value = "R_AVG">Average Yards Per Rush Play</option>
-        <option value = "TOTAL_PLAYS">Total Number of Plays Run</option>
-        <option value = "RUN_PERCENT">Run Plays Percentage</option>
-        <option value = "PASS_PERCENT">Pass Plays Percentage</option>
-      </select>
-    </form>
-    <div id="line"></div>
-    <button id = "update">Update</button>
-    <h3>Team Statistics Over Time</h3>
-    <form>
-      <label for="stats">Choose a statistic to display:</label>
-      <select name="stats" id="stats">
-        <script src="stats.js"></script>
-      </select>
-      <br>
-      <label for="team" id="teamLabel">Choose a team to display:</label>
-      <select id="teams" multiple>
-        <script src="teams.js"></script>
-      </select>
-      <br>
-      <i>Some statistics may not be available for some teams</i>
-      <br>
-    </form>
+    <div class="float-container">
+      <div class="float-child">
+        <div id = "barGraph">
+          <h3>Team Statistics Per Year</h3>
+        
+          <label>Year</label>
+          <select id="barSelect">
+            <option value="2010">2010</option>
+            <option value="2011">2011</option>
+            <option value="2012">2012</option>
+            <option value="2013">2013</option>
+            <option value="2014">2014</option>
+            <option value="2015">2015</option>
+            <option value="2016">2016</option>
+            <option value="2017">2017</option>
+            <option value="2018">2018</option>
+            <option value="2019">2019</option>
+            <option value="2020">2020</option>
+          </select>
+          <label>Attribute</label>
+          <select id="barXSelect">
+            <option value="CMP">Completions</option>
+            <option value="ATT">Pass Attempts</option>
+            <option value="YDS">Passing Yards</option>
+            <option value="CMPPercent">Completion Percentage</option>
+            <option value="YPA">Yards Per Attempt</option>
+            <option value="LNG">Longest Pass</option>
+            <option value="TD">Passing Touchdowns</option>
+            <option value="INT">Interceptions</option>
+            <option value="SACK">Number of Times Sacked</option>
+            <!-- <option value = "SYL">Yards Lost from Sacks</option> -->
+            <option value="RTG">Quarterback Ratings</option>
+            <option value="R_ATT">Rush Play Attempts</option>
+            <option value="R_AVG">Average Yards Per Rush Play</option>
+            <option value="TOTAL_PLAYS">Total Number of Plays Run</option>
+            <option value="RUN_PERCENT">Run Plays Percentage</option>
+            <option value="PASS_PERCENT">Pass Plays Percentage</option>
+          </select>
+          <button id="updateBar">Update</button>
+        </div>     
+      </div>
+  
+      <div class="float-child">
+        <div id = "line">
+          <h3>Relationship Between Statisitcs</h3>
+          <label>Year</label>
+          <select id="yearSelect">
+            <option value="2010">2010</option>
+            <option value="2011">2011</option>
+            <option value="2012">2012</option>
+            <option value="2013">2013</option>
+            <option value="2014">2014</option>
+            <option value="2015">2015</option>
+            <option value="2016">2016</option>
+            <option value="2017">2017</option>
+            <option value="2018">2018</option>
+            <option value="2019">2019</option>
+            <option value="2020">2020</option>
+          </select>
+          <label>X Axis</label>
+          <select id="xSelect">
+            <option value="CMP">Completions</option>
+            <option value="ATT">Pass Attempts</option>
+            <option value="YDS">Passing Yards</option>
+            <option value="CMPPercent">Completion Percentage</option>
+            <option value="YPA">Yards Per Attempt</option>
+            <option value="LNG">Longest Pass</option>
+            <option value="TD">Passing Touchdowns</option>
+            <option value="INT">Interceptions</option>
+            <option value="SACK">Number of Times Sacked</option>
+            <!-- <option value = "SYL">Yards Lost from Sacks</option> -->
+            <option value="RTG">Quarterback Ratings</option>
+            <option value="R_ATT">Rush Play Attempts</option>
+            <option value="R_AVG">Average Yards Per Rush Play</option>
+            <option value="TOTAL_PLAYS">Total Number of Plays Run</option>
+            <option value="RUN_PERCENT">Run Plays Percentage</option>
+            <option value="PASS_PERCENT">Pass Plays Percentage</option>
+          </select>
+          <label>Y Axis</label>
+          <select id="ySelect">
+            <option value="CMP">Completions</option>
+            <option value="ATT">Pass Attempts</option>
+            <option value="YDS">Passing Yards</option>
+            <option value="CMPPercent">Completion Percentage</option>
+            <option value="YPA">Yards Per Attempt</option>
+            <option value="LNG">Longest Pass</option>
+            <option value="TD">Passing Touchdowns</option>
+            <option value="INT">Interceptions</option>
+            <option value="SACK">Number of Times Sacked</option>
+            <!-- <option value = "SYL">Yards Lost from Sacks</option> -->
+            <option value="RTG">Quarterback Ratings</option>
+            <option value="R_ATT">Rush Play Attempts</option>
+            <option value="R_AVG">Average Yards Per Rush Play</option>
+            <option value="TOTAL_PLAYS">Total Number of Plays Run</option>
+            <option value="RUN_PERCENT">Run Plays Percentage</option>
+            <option value="PASS_PERCENT">Pass Plays Percentage</option>
+          </select>
+          <button id="update">Update</button>
+        </div>
+      </div>
 
-    <button id="render">Render</button>
-
-
-    <div id="chart"></div>
-    <label>Year</labeL>
-    <select id = "barSelect">
-      <option value = "2010">2010</option>
-      <option value = "2011">2011</option>
-      <option value = "2012">2012</option>
-      <option value = "2013">2013</option>
-      <option value = "2014">2014</option>
-      <option value = "2015">2015</option>
-      <option value = "2016">2016</option>
-      <option value = "2017">2017</option>
-      <option value = "2018">2018</option>
-      <option value = "2019">2019</option>
-      <option value = "2020">2020</option>
-    </select>
-
-    <label>Attribute</label>
-    <select id = "barXSelect">
-      <option value = "CMP">Completions</option>
-      <option value = "ATT">Pass Attempts</option>
-      <option value = "YDS">Passing Yards</option>
-      <option value = "CMPPercent">Completion Percentage</option>
-      <option value = "YPA">Yards Per Attempt</option>
-      <option value = "LNG">Longest Pass</option>
-      <option value = "TD">Passing Touchdowns</option>
-      <option value = "INT">Interceptions</option>
-      <option value = "SACK">Number of Times Sacked</option>
-      <!-- <option value = "SYL">Yards Lost from Sacks</option> -->
-      <option value = "RTG">Quarterback Ratings</option>
-      <option value = "R_ATT">Rush Play Attempts</option>
-      <option value = "R_AVG">Average Yards Per Rush Play</option>
-      <option value = "TOTAL_PLAYS">Total Number of Plays Run</option>
-      <option value = "RUN_PERCENT">Run Plays Percentage</option>
-      <option value = "PASS_PERCENT">Pass Plays Percentage</option>
-    </select>
-    <button id="updateBar">Update</button>
-    <div id="barGraph"></div>
-    <script src="script.js"></script>
-    <script src="conScript.js"></script>
-    <script src="barscript.js"></script>
+      <div class = "float-child">
+        <h3>Team Statistics Over Time</h3>
+        <div id="chart"></div>
+          <label for="stats">Choose a statistic to display:</label>
+          <select name="stats" id="stats">
+            <script src="stats.js"></script>
+          </select>
+          <br>
+          <label for="team" id="teamLabel">Choose a team to display:</label>
+          <select id="teams" multiple>
+            <script src="teams.js"></script>
+          </select>
+          <br>
+          <button id="render">Render</button>
+          <br>
+          <i>Some statistics may not be available for some teams</i>
+        </div>
+      </div>
+      <script src="barscript.js"></script>
+      <script src="script.js"></script>
+      <script src="conScript.js"></script>
+    </div> 
   </body>
 </html>

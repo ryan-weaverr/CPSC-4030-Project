@@ -6,7 +6,8 @@ var options;
 d3.csv("data/cfb.csv").then(function (data) {
     options = Object.keys(data[0]);
     options.forEach((v) => {
-        if(v != "UniversityName" && v != "TeamID" && v != "Year"){
+        if(v != "UniversityName" && v != "TeamID" && v != "Year")
+        {
             var opt = document.createElement("option");
             opt.value = v;
             opt.innerHTML = v;

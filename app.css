@@ -1,10 +1,38 @@
-h1 {
+h1 
+{
+    margin: 0px;
+    background-color:orange;
     text-align: center;
     font-family: Arial;
-    }
-h3 {
+}
+
+h3 
+{
     font-family: Arial;
 }
-.label {
+
+.label 
+{
     font-family: Arial;
 }
+
+body
+{
+    background-color:rgb(215, 206, 206);
+    margin:0px;
+}
+
+/* Create two equal columns that floats next to each other */
+.float-container{
+    padding: 10px;
+    height: 2100px;
+}
+.float-child{
+    width: 45%;
+    float: left;
+    padding: 10px;
+} 
+
+
+        
+

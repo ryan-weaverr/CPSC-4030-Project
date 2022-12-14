@@ -1,0 +1,22 @@
+<h3>Team Statistics Over Time</h3>
+    <div id="chart"></div>
+    <form>
+      <label for="stats">Choose a statistic to display:</label>
+      <select name="stats" id="stats">
+        <script src="stats.js"></script>
+      </select>
+      <br />
+      <label for="team" id="teamLabel">Choose a team to display:</label>
+      <select id="teams" multiple>
+        <script src="teams.js"></script>
+      </select>
+      <br />
+      <i>Some statistics may not be available for some teams</i>
+      <br />
+    </form>
+    <button id="render">Render</button>
+    <script src="conScript.js"></script>
+    </div>
+
+
+    <select id="teams" multiple></select>

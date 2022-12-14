@@ -1,14 +1,16 @@
-const margin = { top: 20, right: 30, bottom: 80, left: 160 },
+const margin = {top: 20, right: 30, bottom: 80, left: 100 },
   width = 500 - margin.left - margin.right,
-  height = 1200 - margin.top - margin.bottom;
+  height = 1900 - margin.top - margin.bottom;
 
-d3.csv("data/cfb.csv").then(function (data) {
+d3.csv("data/cfb.csv").then(function (data) 
+{
   var button = document.getElementById("updateBar");
   var select = document.getElementById("barSelect");
 
   var xGetter = document.getElementById("barXSelect");
 
-  function update() {
+  function update() 
+  {
     d3.selectAll("#barG").remove();
 
     var xAttr = xGetter.options[xGetter.selectedIndex].value;
@@ -34,6 +36,7 @@ d3.csv("data/cfb.csv").then(function (data) {
         ),
       ])
       .range([0, width]);
+      
     svg
       .append("g")
       .attr("transform", `translate(0, ${height})`)
@@ -65,7 +68,16 @@ d3.csv("data/cfb.csv").then(function (data) {
       .attr("y", (d) => y(d.UniversityName))
       .attr("width", (d) => x(d[xAttr]))
       .attr("height", y.bandwidth())
-      .attr("fill", "#69b3a2");
+      .attr("fill", "Orange")
+      .on("mouseover", function(d, x){
+        d3.select(this)
+        .attr("stroke-width", "1")
+        .attr("stroke", "black")
+      })
+      .on("mouseout", function(d){
+        d3.select(this)
+        .attr("stroke-width", "0")
+      })
   }
   update();
   button.addEventListener("click", update);
