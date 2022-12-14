@@ -74,10 +74,12 @@ d3.csv("data/cfb.csv").then(function (data) {
       .attr("x", -margin.top - height / 2)
       .text(selectedStat);
 
+    let legendTracker = -1;
     // Draw a line for each team in selectedTeams
     for (var i = 0; i < selectedTeams.length; i++) {
       if (selectedTeams[i].selected) {
         // Get a random color
+        legendTracker++;
         var color = d3
           .scaleOrdinal()
           .domain([0, 1])
@@ -108,7 +110,10 @@ d3.csv("data/cfb.csv").then(function (data) {
         // Add dynamically placed legend
         var legend = svg
           .append("g")
-          .attr("transform", `translate(${width - 100}, ${i * 20})`);
+          .attr(
+            "transform",
+            `translate(${width - 100}, ${legendTracker * 20})`
+          );
         legend
           .append("rect")
           .attr("width", 10)
