@@ -3,8 +3,7 @@ const margin = { top: 20, right: 30, bottom: 80, left: 100 },
   height = 1900 - margin.top - margin.bottom;
 
 function changeBar(university, toggle) {
-  console.log(university);
-  if (toggle) {
+  if (toggle === "true") {
     d3.select("#" + university).attr("fill", "cyan");
   } else {
     d3.select("#" + university).attr("fill", "darkorchid");
@@ -54,7 +53,13 @@ function updateBar() {
     const y = d3
       .scaleBand()
       .range([0, height])
-      .domain(data.map((d) => d.UniversityName))
+      .domain(
+        data
+          .filter((v) => {
+            return v.Year === select.options[select.selectedIndex].value;
+          })
+          .map((d) => d.UniversityName)
+      )
       .padding(0.1);
     svg.append("g").call(d3.axisLeft(y));
 
@@ -79,12 +84,34 @@ function updateBar() {
       .attr("width", (d) => x(d[xAttr]))
       .attr("height", y.bandwidth())
       .attr("fill", "darkorchid")
+      .attr("toggle", "false")
       .attr("id", (d) => d.UniversityName)
       .on("mouseover", function (d, x) {
-        d3.select(this).attr("stroke-width", "1").attr("stroke", "black");
+        if (d3.select(this).attr("toggle") === "false") {
+          d3.select(this)
+            .attr("stroke-width", "1")
+            .attr("stroke", "black")
+            .attr("fill", "cyan");
+        }
       })
       .on("mouseout", function (d) {
-        d3.select(this).attr("stroke-width", "0");
+        if (d3.select(this).attr("toggle") === "false") {
+          d3.select(this).attr("stroke-width", "0").attr("fill", "darkorchid");
+        }
+      })
+      .on("click", function (d, i) {
+        if (d3.select(this).attr("toggle") === "false") {
+          d3.select(this)
+            .attr("stroke-width", "1")
+            .attr("fill", "blue")
+            .attr("toggle", "true");
+        } else {
+          d3.select(this)
+            .attr("stroke-width", "0")
+            .attr("fill", "cyan")
+            .attr("toggle", "false");
+        }
+        changePoint(i.UniversityName, d3.select(this).attr("toggle"));
       });
   });
 }

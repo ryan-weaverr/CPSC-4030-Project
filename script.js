@@ -2,6 +2,18 @@
 
 //import { changeBar } from "barscript.js";
 
+function changePoint(university, toggle) {
+  if (toggle === "true") {
+    d3.select("#" + university + "scatter")
+      .attr("fill", "cyan")
+      .attr("r", 6.0);
+  } else {
+    d3.select("#" + university + "scatter")
+      .attr("fill", "darkorchid")
+      .attr("r", 2.0);
+  }
+}
+
 function updateScatter() {
   //Read the data
   d3.csv("data/cfb.csv").then(function (data) {
@@ -13,14 +25,10 @@ function updateScatter() {
     var xGetter = document.getElementById("xSelect");
     var yGetter = document.getElementById("ySelect");
 
-    var toggled = false;
-
     d3.selectAll("#scatter").remove();
 
     var xAttr = xGetter.options[xGetter.selectedIndex].value;
     var yAttr = yGetter.options[yGetter.selectedIndex].value;
-
-    console.log(xAttr, yAttr);
 
     const margin = { top: 10, right: 30, bottom: 30, left: 60 },
       width = 700 - margin.left - margin.right,
@@ -116,34 +124,24 @@ function updateScatter() {
           return v.Year === select.options[select.selectedIndex].value;
         })
       )
-      .join(
-        function (enter) {
-          return enter.append("circle");
-        },
-        function (exit) {
-          return exit
-            .transition()
-            .duration(5)
-            .attr("r", 0)
-            .style("opacity", 0)
-            .attr("cx", 1000)
-            .on("end", function () {
-              d3.select().remove();
-            });
-        }
-      )
+      .join(function (enter) {
+        return enter.append("circle");
+      })
       .attr("cx", function (d) {
         return x(d[xAttr]);
       })
       .attr("cy", function (d) {
         return y(d[yAttr]);
       })
+      .attr("fill", "darkorchid")
+      .attr("toggle", "false")
       .attr("r", 2.0)
-      .style("fill", "darkorchid")
+      .attr("id", (d) => d.UniversityName + "scatter")
+
       .on("mouseover", function (d, i) {
-        if (!toggled) {
+        if (d3.select(this).attr("toggle") === "false") {
           d3.select(this)
-            .style("fill", "cyan")
+            .attr("fill", "cyan")
             .attr("r", 6.0)
             .attr("stroke", "black");
           univeristy.text(i.UniversityName);
@@ -152,16 +150,21 @@ function updateScatter() {
         }
       })
       .on("mouseout", function (d, i) {
-        if (!toggled) {
+        if (d3.select(this).attr("toggle") === "false") {
           d3.select(this)
-            .style("fill", "darkorchid")
+            .attr("fill", "darkorchid")
             .attr("r", 2.0)
             .attr("stroke", "none");
         }
       })
       .on("click", function (d, i) {
-        toggled = !toggled;
-        changeBar(i.UniversityName, toggled);
+        if (d3.select(this).attr("toggle") === "false") {
+          changeBar(i.UniversityName, "true");
+          d3.select(this).attr("toggle", "true").attr("fill", "blue");
+        } else {
+          changeBar(i.UniversityName, "false");
+          d3.select(this).attr("toggle", "false").attr("fill", "cyan");
+        }
       });
 
     svg
