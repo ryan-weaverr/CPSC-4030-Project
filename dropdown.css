@@ -21,6 +21,7 @@
           position:absolute;
           border:1px solid #e2e2e2;
           overflow-y:hidden;
+          background-color: aliceblue;
       }
 
       .MultiCheckBoxDetailBody {
