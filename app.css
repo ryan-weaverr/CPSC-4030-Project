@@ -7,6 +7,13 @@ h1
     color: white;
 }
 
+footer {
+    text-align: center;
+    padding: 3px;
+    background-color: darkorchid;
+    color: white;
+  }
+
 h3 
 {
     font-family: Arial;
