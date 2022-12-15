@@ -11,13 +11,12 @@ function changeBar(university, toggle) {
   }
 }
 
-d3.csv("data/cfb.csv").then(function (data) {
-  var button = document.getElementById("updateBar");
-  var select = document.getElementById("barSelect");
+function updateBar() {
+  d3.csv("data/cfb.csv").then(function (data) {
+    var select = document.getElementById("yearSelect");
 
-  var xGetter = document.getElementById("barXSelect");
+    var xGetter = document.getElementById("barXSelect");
 
-  function update() {
     d3.selectAll("#barG").remove();
 
     var xAttr = xGetter.options[xGetter.selectedIndex].value;
@@ -87,8 +86,7 @@ d3.csv("data/cfb.csv").then(function (data) {
       .on("mouseout", function (d) {
         d3.select(this).attr("stroke-width", "0");
       });
-  }
+  });
+}
 
-  update();
-  button.addEventListener("click", update);
-});
+updateBar();

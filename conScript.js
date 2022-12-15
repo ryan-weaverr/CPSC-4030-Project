@@ -1,11 +1,10 @@
 var strokeWidth = 3;
 var mouseWidth = 5;
 
-//Read the data
-d3.csv("data/cfb.csv").then(function (data) {
-  var button = document.getElementById("render");
+function updateLine() {
+  d3.csv("data/cfb.csv").then(function (data) {
+    var button = document.getElementById("render");
 
-  function update() {
     d3.selectAll("#lineGraph").remove();
 
     // Get teams array from multiple dropdown
@@ -150,7 +149,8 @@ d3.csv("data/cfb.csv").then(function (data) {
             return y(d[selectedStat]);
           })
       );
-  }
-  update();
-  button.addEventListener("click", update);
-});
+    button.addEventListener("click", update);
+  });
+}
+
+updateLine();

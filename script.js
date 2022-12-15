@@ -2,18 +2,17 @@
 
 //import { changeBar } from "barscript.js";
 
-//Read the data
-d3.csv("data/cfb.csv").then(function (data) {
-  // set the dimensions and margins of the graph
+function updateScatter() {
+  //Read the data
+  d3.csv("data/cfb.csv").then(function (data) {
+    // set the dimensions and margins of the graph
 
-  // Add dots
-  var button = document.getElementById("update");
-  var select = document.getElementById("yearSelect");
+    // Add dots
+    var select = document.getElementById("yearSelect");
 
-  var xGetter = document.getElementById("xSelect");
-  var yGetter = document.getElementById("ySelect");
+    var xGetter = document.getElementById("xSelect");
+    var yGetter = document.getElementById("ySelect");
 
-  function update() {
     var toggled = false;
 
     d3.selectAll("#scatter").remove();
@@ -180,17 +179,7 @@ d3.csv("data/cfb.csv").then(function (data) {
       .attr("dy", ".75em")
       .attr("transform", "rotate(-90)")
       .text(yAttr);
-  }
-  update();
-  button.addEventListener("click", update);
+  });
+}
 
-  function toggle(buttonID, id) {
-    d3.select(buttonID).on("click", function () {
-      if (d3.select(id).style("opacity") == 1) {
-        d3.select(id).style("opacity", 0);
-      } else {
-        d3.select(id).style("opacity", 1);
-      }
-    });
-  }
-});
+updateScatter();
