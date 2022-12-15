@@ -1,5 +1,7 @@
 //window.onload = updateImage;
 
+//import { changeBar } from "barscript.js";
+
 //Read the data
 d3.csv("data/cfb.csv").then(function (data) {
   // set the dimensions and margins of the graph
@@ -12,6 +14,8 @@ d3.csv("data/cfb.csv").then(function (data) {
   var yGetter = document.getElementById("ySelect");
 
   function update() {
+    var toggled = false;
+
     d3.selectAll("#scatter").remove();
 
     var xAttr = xGetter.options[xGetter.selectedIndex].value;
@@ -20,7 +24,7 @@ d3.csv("data/cfb.csv").then(function (data) {
     console.log(xAttr, yAttr);
 
     const margin = { top: 10, right: 30, bottom: 30, left: 60 },
-      width = 460 - margin.left - margin.right,
+      width = 700 - margin.left - margin.right,
       height = 400 - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
@@ -76,6 +80,35 @@ d3.csv("data/cfb.csv").then(function (data) {
     svg.append("g").transition().call(yAxis);
 
     //d3.axisLeft(y).transition();
+
+    var univeristy = svg
+      .append("text")
+      .attr("id", "topbartext")
+      .attr("x", width - 100)
+      .attr("y", 20)
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("font-family", "sans-serif")
+      .text("");
+    var xLabel = svg
+      .append("text")
+      .attr("id", "topbartext")
+      .attr("x", width - 100)
+      .attr("y", 40)
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("font-family", "sans-serif")
+      .text("");
+    var yLabel = svg
+      .append("text")
+      .attr("id", "topbartext")
+      .attr("x", width - 100)
+      .attr("y", 60)
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("font-family", "sans-serif")
+      .text("");
+
     svg
       .append("g")
       .selectAll("dot")
@@ -106,8 +139,31 @@ d3.csv("data/cfb.csv").then(function (data) {
       .attr("cy", function (d) {
         return y(d[yAttr]);
       })
-      .attr("r", 1.5)
-      .style("fill", "darkorchid");
+      .attr("r", 2.0)
+      .style("fill", "darkorchid")
+      .on("mouseover", function (d, i) {
+        if (!toggled) {
+          d3.select(this)
+            .style("fill", "cyan")
+            .attr("r", 6.0)
+            .attr("stroke", "black");
+          univeristy.text(i.UniversityName);
+          xLabel.text(xAttr + ": " + i[xAttr]);
+          yLabel.text(yAttr + ": " + i[yAttr]);
+        }
+      })
+      .on("mouseout", function (d, i) {
+        if (!toggled) {
+          d3.select(this)
+            .style("fill", "darkorchid")
+            .attr("r", 2.0)
+            .attr("stroke", "none");
+        }
+      })
+      .on("click", function (d, i) {
+        toggled = !toggled;
+        changeBar(i.UniversityName, toggled);
+      });
 
     svg
       .append("text")

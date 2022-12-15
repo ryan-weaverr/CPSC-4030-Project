@@ -2,6 +2,15 @@ const margin = { top: 20, right: 30, bottom: 80, left: 100 },
   width = 500 - margin.left - margin.right,
   height = 1900 - margin.top - margin.bottom;
 
+function changeBar(university, toggle) {
+  console.log(university);
+  if (toggle) {
+    d3.select("#" + university).attr("fill", "cyan");
+  } else {
+    d3.select("#" + university).attr("fill", "darkorchid");
+  }
+}
+
 d3.csv("data/cfb.csv").then(function (data) {
   var button = document.getElementById("updateBar");
   var select = document.getElementById("barSelect");
@@ -71,6 +80,7 @@ d3.csv("data/cfb.csv").then(function (data) {
       .attr("width", (d) => x(d[xAttr]))
       .attr("height", y.bandwidth())
       .attr("fill", "darkorchid")
+      .attr("id", (d) => d.UniversityName)
       .on("mouseover", function (d, x) {
         d3.select(this).attr("stroke-width", "1").attr("stroke", "black");
       })
@@ -78,6 +88,7 @@ d3.csv("data/cfb.csv").then(function (data) {
         d3.select(this).attr("stroke-width", "0");
       });
   }
+
   update();
   button.addEventListener("click", update);
 });
