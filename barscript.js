@@ -29,6 +29,25 @@ function updateBar() {
       .append("g")
       .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
+    var university = svg
+      .append("text")
+      .attr("id", "topbartext")
+      .attr("x", 0)
+      .attr("y", 0)
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("font-family", "sans-serif")
+      .text("");
+    var xLabel = svg
+      .append("text")
+      .attr("id", "topbartext")
+      .attr("x", 0)
+      .attr("y", 20)
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("font-family", "sans-serif")
+      .text("");
+
     const x = d3
       .scaleLinear()
       .domain([
@@ -52,7 +71,7 @@ function updateBar() {
 
     const y = d3
       .scaleBand()
-      .range([0, height])
+      .range([50, height])
       .domain(
         data
           .filter((v) => {
@@ -93,6 +112,8 @@ function updateBar() {
             .attr("stroke", "black")
             .attr("fill", "cyan");
         }
+        university.text(x.UniversityName);
+        xLabel.text(xAttr + ": " + x[xAttr]);
       })
       .on("mouseout", function (d) {
         if (d3.select(this).attr("toggle") === "false") {

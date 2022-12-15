@@ -88,10 +88,10 @@ function updateScatter() {
 
     //d3.axisLeft(y).transition();
 
-    var univeristy = svg
+    var university = svg
       .append("text")
       .attr("id", "topbartext")
-      .attr("x", width - 100)
+      .attr("x", width - 200)
       .attr("y", 20)
       .attr("dx", "-.8em")
       .attr("dy", ".15em")
@@ -100,7 +100,7 @@ function updateScatter() {
     var xLabel = svg
       .append("text")
       .attr("id", "topbartext")
-      .attr("x", width - 100)
+      .attr("x", width - 200)
       .attr("y", 40)
       .attr("dx", "-.8em")
       .attr("dy", ".15em")
@@ -109,7 +109,7 @@ function updateScatter() {
     var yLabel = svg
       .append("text")
       .attr("id", "topbartext")
-      .attr("x", width - 100)
+      .attr("x", width - 200)
       .attr("y", 60)
       .attr("dx", "-.8em")
       .attr("dy", ".15em")
@@ -144,7 +144,7 @@ function updateScatter() {
             .attr("fill", "cyan")
             .attr("r", 6.0)
             .attr("stroke", "black");
-          univeristy.text(i.UniversityName);
+          university.text(i.UniversityName);
           xLabel.text(xAttr + ": " + i[xAttr]);
           yLabel.text(yAttr + ": " + i[yAttr]);
         }
