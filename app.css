@@ -12,7 +12,12 @@ h3
     font-family: Arial;
 }
 
-.label 
+label 
+{
+    font-family: Arial;
+}
+
+text
 {
     font-family: Arial;
 }
