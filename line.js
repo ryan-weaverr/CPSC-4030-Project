@@ -48,6 +48,12 @@ function updateLine() {
       .attr("transform", `translate(0, ${height})`)
       .call(d3.axisBottom(x));
 
+    // remove comma from year axis
+    svg.selectAll(".tick text").text(function (d) {
+      return d;
+    });
+
+
     // Get the max value of the selected stat
     var max = d3.max(data, function (d) {
       return +d[selectedStat];
