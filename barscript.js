@@ -71,7 +71,7 @@ function updateBar() {
 
     const y = d3
       .scaleBand()
-      .range([50, height])
+      .range([40, height])
       .domain(
         data
           .filter((v) => {
