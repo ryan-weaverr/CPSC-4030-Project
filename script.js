@@ -107,7 +107,7 @@ d3.csv("data/cfb.csv").then(function (data) {
         return y(d[yAttr]);
       })
       .attr("r", 1.5)
-      .style("fill", "Orange");
+      .style("fill", "darkorchid");
 
     svg
       .append("text")

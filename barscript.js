@@ -70,7 +70,7 @@ d3.csv("data/cfb.csv").then(function (data) {
       .attr("y", (d) => y(d.UniversityName))
       .attr("width", (d) => x(d[xAttr]))
       .attr("height", y.bandwidth())
-      .attr("fill", "Orange")
+      .attr("fill", "darkorchid")
       .on("mouseover", function (d, x) {
         d3.select(this).attr("stroke-width", "1").attr("stroke", "black");
       })

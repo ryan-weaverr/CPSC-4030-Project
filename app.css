@@ -1,9 +1,10 @@
 h1 
 {
     margin: 0px;
-    background-color:orange;
+    background-color:darkorchid;
     text-align: center;
     font-family: Arial;
+    color: white;
 }
 
 h3 
@@ -18,7 +19,7 @@ h3
 
 body
 {
-    background-color:rgb(215, 206, 206);
+    background-color:rgb(#fff, #fff, #fff);
     margin:0px;
 }
 
